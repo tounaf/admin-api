@@ -1,0 +1,22 @@
+services:
+  mariadb:
+    image: mariadb:10.11
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=fiangonana
+      - MYSQL_USER=fiangonana
+      - MYSQL_PASSWORD=fiangonana
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - fiangonana_network
+
+volumes:
+  mariadb_data:
+    driver: local
+
+networks:
+  fiangonana_network:
+    driver: bridge
