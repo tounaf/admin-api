@@ -4,10 +4,27 @@ namespace App\Entity;
 
 use App\Repository\FiangonanaRepository;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Get;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FiangonanaRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get,
+        new Post(),
+        new Put(),
+        new Delete(),
+        new Patch(),
+        new GetCollection(uriTemplate: '/fiangonanas{._format}', filters: ['app.fiangonana_search_filter'])
+    ],
+)]
 class Fiangonana
 {
     #[ORM\Id]
@@ -32,6 +49,20 @@ class Fiangonana
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $code = null;
+
+    /**
+     * @var Collection<int, Offering>
+     */
+    #[ORM\OneToMany(targetEntity: Offering::class, mappedBy: 'fiangonana')]
+    private Collection $offerings;
+
+    public function __construct()
+    {
+        $this->offerings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +137,48 @@ class Fiangonana
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): static
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Offering>
+     */
+    public function getOfferings(): Collection
+    {
+        return $this->offerings;
+    }
+
+    public function addOffering(Offering $offering): static
+    {
+        if (!$this->offerings->contains($offering)) {
+            $this->offerings->add($offering);
+            $offering->setFiangonana($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffering(Offering $offering): static
+    {
+        if ($this->offerings->removeElement($offering)) {
+            // set the owning side to null (unless already changed)
+            if ($offering->getFiangonana() === $this) {
+                $offering->setFiangonana(null);
+            }
+        }
 
         return $this;
     }

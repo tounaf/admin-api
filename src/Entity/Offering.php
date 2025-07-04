@@ -24,6 +24,9 @@ class Offering
     #[ORM\Column]
     private ?float $total = null;
 
+    #[ORM\ManyToOne(inversedBy: 'offerings')]
+    private ?Fiangonana $fiangonana = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Offering
     public function setTotal(float $total): static
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    public function getFiangonana(): ?Fiangonana
+    {
+        return $this->fiangonana;
+    }
+
+    public function setFiangonana(?Fiangonana $fiangonana): static
+    {
+        $this->fiangonana = $fiangonana;
 
         return $this;
     }
