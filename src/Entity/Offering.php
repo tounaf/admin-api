@@ -6,9 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\OfferingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: OfferingRepository::class)]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['fiangonana' => 'exact'])]
 class Offering
 {
     #[ORM\Id]

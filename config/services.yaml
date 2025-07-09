@@ -25,3 +25,8 @@ services:
         parent: 'api_platform.doctrine.orm.search_filter'
         arguments: [ { code: 'exact' } ]
         tags: [ { name: 'api_platform.filter', id: 'app.fiangonana_search_filter' } ]
+    # config/services.yaml
+    # app.multi_fiangonana_filter:
+    #     parent: 'api_platform.doctrine.orm.search_filter'
+    #     arguments: [ { fiangonana: 'exact' } ]
+    #     tags: [ 'api_platform.filter' ]
