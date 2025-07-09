@@ -34,6 +34,12 @@ class Offering
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date = null;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->date = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
