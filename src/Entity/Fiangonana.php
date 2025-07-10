@@ -13,11 +13,16 @@ use ApiPlatform\Metadata\Get;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: FiangonanaRepository::class)]
 #[ApiResource(
+    normalizationContext: ['groups' => ['fiangonana:read']],
     operations: [
-        new Get,
+        new Get(
+            normalizationContext: ['groups' => ['fiangonana:read', 'offrande:read']],
+        ),
         new Post(),
         new Put(),
         new Delete(),
@@ -30,8 +35,10 @@ class Fiangonana
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['fiangonana:read', 'offrande:read'])]
     private ?int $id = null;
 
+    #[Groups(['fiangonana:read', 'offrande:read'])]
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
