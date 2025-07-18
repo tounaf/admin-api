@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\Get;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FiangonanaRepository::class)]
 #[ApiResource(
@@ -24,24 +25,31 @@ use Doctrine\ORM\Mapping as ORM;
         new Patch(),
         new GetCollection(uriTemplate: '/fiangonanas{._format}', filters: ['app.fiangonana_search_filter'])
     ],
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']]
 )]
 class Fiangonana
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['read', 'write'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $adresse = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?float $latitude = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?float $longitude = null;
 
     #[ORM\Column]
@@ -51,6 +59,7 @@ class Fiangonana
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $code = null;
 
     /**
@@ -59,9 +68,16 @@ class Fiangonana
     #[ORM\OneToMany(targetEntity: Offering::class, mappedBy: 'fiangonana')]
     private Collection $offerings;
 
+    /**
+     * @var Collection<int, Expense>
+     */
+    #[ORM\OneToMany(targetEntity: Expense::class, mappedBy: 'fiangonana', orphanRemoval: true)]
+    private Collection $expenses;
+
     public function __construct()
     {
         $this->offerings = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +193,36 @@ class Fiangonana
             // set the owning side to null (unless already changed)
             if ($offering->getFiangonana() === $this) {
                 $offering->setFiangonana(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Expense>
+     */
+    public function getExpenses(): Collection
+    {
+        return $this->expenses;
+    }
+
+    public function addExpense(Expense $expense): static
+    {
+        if (!$this->expenses->contains($expense)) {
+            $this->expenses->add($expense);
+            $expense->setFiangonana($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpense(Expense $expense): static
+    {
+        if ($this->expenses->removeElement($expense)) {
+            // set the owning side to null (unless already changed)
+            if ($expense->getFiangonana() === $this) {
+                $expense->setFiangonana(null);
             }
         }
 

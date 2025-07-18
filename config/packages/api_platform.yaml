@@ -2,8 +2,17 @@ api_platform:
     title: Hello API Platform
     version: 1.0.0
     formats:
+        jsonld: ['application/ld+json']
         json: ['application/json']
+    patch_formats:
+        json: ['application/json']
+        merge: ['application/merge-patch+json']
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Entity'
+            # - '%kernel.project_dir%/src/Dto'
     defaults:
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+    enable_profiler: true
