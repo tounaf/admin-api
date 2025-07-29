@@ -1,0 +1,9 @@
+resources:
+  App\Dto\OfferingTotalByFiangonana:
+    operations:
+      ApiPlatform\Metadata\GetCollection:
+        path: '/offerings/total-by-fiangonana'
+        controller: App\Controller\OfferingTotalByFiangonanaController
+        read: false
+        normalization_context:
+          groups: ['offering:total_by_fiangonana']

@@ -30,3 +30,9 @@ services:
     #     parent: 'api_platform.doctrine.orm.search_filter'
     #     arguments: [ { fiangonana: 'exact' } ]
     #     tags: [ 'api_platform.filter' ]
+
+    App\State\OfferingStatisticsProvider:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'api_platform.state_provider', priority: 1 }
