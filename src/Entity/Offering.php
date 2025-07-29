@@ -2,16 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\OfferingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: OfferingRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['offering:read']],
+    denormalizationContext: ['groups' => ['offering:write']]
+)]
 #[ApiFilter(SearchFilter::class, properties: ['fiangonana' => 'exact'])]
+#[ApiFilter(DateFilter::class, properties: ['date'])]
 class Offering
 {
     #[ORM\Id]
@@ -20,14 +26,18 @@ class Offering
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['offering:read'])]
     private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['offering:read'])]
     private ?array $quantities = null;
 
     #[ORM\Column]
+    #[Groups(['offering:read'])]
     private ?float $total = null;
 
+    #[Groups(['offering:read'])]
     #[ORM\ManyToOne(inversedBy: 'offerings')]
     private ?Fiangonana $fiangonana = null;
 
@@ -35,6 +45,7 @@ class Offering
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['offering:read'])]
     private ?\DateTime $date = null;
 
     public function __construct()

@@ -37,7 +37,7 @@ class Fiangonana
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['read', 'write', 'offering:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
