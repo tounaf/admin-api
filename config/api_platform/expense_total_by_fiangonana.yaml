@@ -1,0 +1,9 @@
+resources:
+  App\Dto\ExpenseTotalByFiangonana:
+    operations:
+      ApiPlatform\Metadata\GetCollection:
+        path: '/expenses/expense-by-fiangonana'
+        controller: App\Controller\ExpenseTotalByFiangonanaController
+        read: false
+        normalization_context:
+          groups: ['expense:total_by_fiangonana']

@@ -16,6 +16,17 @@ class ExpenseRepository extends ServiceEntityRepository
         parent::__construct($registry, Expense::class);
     }
 
+    public function findExpenseByFiangonanaAndDate()
+    {
+        return $this->createQueryBuilder('o')
+            ->select('f.nom AS fiangonana_name', 'SUM(o.amount) AS total_offering', 'o.dateSabbat')
+            ->join('o.fiangonana', 'f')
+            ->groupBy('f.id')
+            // ->orderBy('o.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Expense[] Returns an array of Expense objects
     //     */

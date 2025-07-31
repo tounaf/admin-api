@@ -15,6 +15,8 @@ class FiangonanaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Fiangonana::class);
     }
+    
+    
 
     //    /**
     //     * @return Fiangonana[] Returns an array of Fiangonana objects
