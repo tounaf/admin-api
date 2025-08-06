@@ -26,18 +26,18 @@ class Offering
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['offering:read'])]
+    #[Groups(['offering:read','offering:write'])]
     private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['offering:read'])]
+    #[Groups(['offering:read','offering:write'])]
     private ?array $quantities = null;
 
     #[ORM\Column]
-    #[Groups(['offering:read'])]
+    #[Groups(['offering:read','offering:write'])]
     private ?float $total = null;
 
-    #[Groups(['offering:read'])]
+    #[Groups(['offering:read','offering:write'])]
     #[ORM\ManyToOne(inversedBy: 'offerings')]
     private ?Fiangonana $fiangonana = null;
 

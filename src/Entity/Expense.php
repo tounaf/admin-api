@@ -47,7 +47,7 @@ class Expense
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['read'])]
+    #[Groups(['read','write'])]
     private ?string $description = null;
 
     #[ORM\Column]
