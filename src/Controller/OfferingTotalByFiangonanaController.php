@@ -6,6 +6,7 @@ use App\Dto\OfferingTotalByFiangonana;
 use App\Repository\OfferingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[AsController]
@@ -18,9 +19,10 @@ class OfferingTotalByFiangonanaController extends AbstractController
         $this->offeringRepository = $offeringRepository;
     }
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $results = $this->offeringRepository->findTotalByFiangonanaAndDate();
+        $fiangonanaId = $request->query->get('fiangonana_id');
+        $results = $this->offeringRepository->findTotalByFiangonanaAndDate($fiangonanaId);
         $dtos = [];
 
         foreach ($results as $result) {

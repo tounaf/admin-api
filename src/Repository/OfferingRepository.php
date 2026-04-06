@@ -16,11 +16,16 @@ class OfferingRepository extends ServiceEntityRepository
         parent::__construct($registry, Offering::class);
     }
 
-    public function findTotalByFiangonanaAndDate()
+    public function findTotalByFiangonanaAndDate($fiangonanaId = null)
     {
-        return $this->createQueryBuilder('o')
+        $queryBuilder = $this->createQueryBuilder('o')
             ->select('f.nom AS fiangonana_name', 'SUM(o.total) AS total_offering', 'o.date')
-            ->join('o.fiangonana', 'f')
+            ->join('o.fiangonana', 'f');
+        if ($fiangonanaId) {
+            $queryBuilder->andWhere('f.id = :fiangonanaId')
+                ->setParameter('fiangonanaId', $fiangonanaId);
+        }
+        return $queryBuilder
             ->groupBy('f.id, o.date')
             ->orderBy('o.date', 'ASC')
             ->getQuery()
