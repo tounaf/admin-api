@@ -39,7 +39,7 @@ class Fiangonana
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['read', 'write', 'offering:read'])]
+    #[Groups(['read', 'write', 'offering:read', 'sabbat:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -65,6 +65,14 @@ class Fiangonana
     #[ORM\Column(length: 20, nullable: true)]
     #[Groups(['read', 'write'])]
     private ?string $code = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['read', 'write'])]
+    private ?float $caution = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['read', 'write'])]
+    private ?float $rar = null;
 
     /**
      * @var Collection<int, Offering>
@@ -143,6 +151,7 @@ class Fiangonana
     }
 
     #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function setCreatedAt(): void
     {
         $this->createdAt = new DateTimeImmutable();
@@ -227,6 +236,30 @@ class Fiangonana
                 $expense->setFiangonana(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCaution(): ?float
+    {
+        return $this->caution;
+    }
+
+    public function setCaution(?float $caution): static
+    {
+        $this->caution = $caution;
+
+        return $this;
+    }
+
+    public function getRar(): ?float
+    {
+        return $this->rar;
+    }
+
+    public function setRar(?float $rar): static
+    {
+        $this->rar = $rar;
 
         return $this;
     }

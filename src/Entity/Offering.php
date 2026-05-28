@@ -14,7 +14,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: OfferingRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['offering:read']],
-    denormalizationContext: ['groups' => ['offering:write']]
+    denormalizationContext: ['groups' => ['offering:write']],
+    order: ['date' => 'DESC']
 )]
 #[ApiFilter(SearchFilter::class, properties: ['fiangonana' => 'exact'])]
 #[ApiFilter(DateFilter::class, properties: ['date'])]

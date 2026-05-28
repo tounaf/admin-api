@@ -42,3 +42,10 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: 'api_platform.state_provider', priority: 1 }
+
+    App\State\SabbatValidationStatisticsProvider:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - ''
+        tags:
+            - { name: 'api_platform.state_provider', priority: 1 }
