@@ -65,3 +65,28 @@ Sécurise l'utilisation de l'application en accordant des privilèges d'édition
 *   Le président général de l'église a un accès en lecture seule sur l'ensemble des sections mais conserve le droit de valider les comptes globaux.
 ### Valeur ajoutée technique :
 Grâce à un `Voter` Symfony personnalisé qui interroge la table `RoleAssignment`, la sécurité n'est plus statique (liée à des rôles de framework comme `ROLE_ADMIN`), mais dynamique et contextuelle, offrant une sécurité applicative de niveau entreprise.
+
+---
+
+## Feature 6 : Portail d'Administration des Élections, Passations & Mandats
+
+### Description :
+Fournit une interface graphique dédiée aux administrateurs pour enregistrer les résultats des élections annuelles et orchestrer la passation de rôles.
+### Fonctionnalités clés :
+*   **Assistant de Passation** : En un clic, archive le mandat en cours (clôture des `RoleAssignment` de l'année T) et ouvre le nouveau mandat de l'année T+1.
+*   **Aperçu d'Historique individuel** : Fiche historique d'un membre retraçant l'ensemble de ses fonctions au cours de sa vie au sein de l'église (ex: 2023 : Président de la Zone Andohanofotsy, 2024 : Trésorier de l'Association des Hommes).
+*   **Alerte de vacance de rôle** : Rappelle si une association ou un sous-groupe n'a pas de bureau élu ou de rôles clés (Président ou Trésorier) actifs pour l'année en cours.
+### Valeur ajoutée technique :
+L'interface consomme l'endpoint `/api/role-assignments` avec des filtres temporels et d'activité (`?isActive=true` ou `?exerciceYear=2025`).
+
+---
+
+## Feature 7 : Cloisonnement Financier Contextuel Automatisé
+
+### Description :
+Garantit l'étanchéité stricte des écritures et consultations comptables entre les différentes associations de la paroisse.
+### Fonctionnalités clés :
+*   **Vues cloisonnées** : Le caissier de l'Association des Femmes voit un tableau de bord épuré, uniquement centré sur les flux financiers de l'Association des Femmes. Les données des Hommes ou de la Chorale lui sont totalement invisibles.
+*   **Rapports consolidés automatiques** : Le Trésorier général de l'église ou le Pasteur ont accès à une vue globale consolidée, agrégeant les sous-comptes de toutes les associations pour le rapport de Sabbat.
+### Valeur ajoutée technique :
+Le cloisonnement financier est opéré directement au niveau de la couche Doctrine ORM grâce à des filtres de requêtes personnalisés ou via API Platform en injectant le contexte de l'utilisateur authentifié dans les requêtes de collection (`Extender / Query Extension`).
