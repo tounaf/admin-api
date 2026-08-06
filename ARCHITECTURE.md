@@ -198,3 +198,15 @@ Utilisés pour personnaliser la récupération de données :
 ### F. Filtres Personnalisés (src/Filter)
 *   `FiangonanaSearchFilter` : Implémente un filtre pour rechercher une paroisse par son `code` exact.
 *   `MultiFiangonanaFilter` : Permet de filtrer des collections en transmettant un tableau d'IRIs de paroisses (`?fiangonana[]=...`). Extrait dynamiquement les IDs numériques grâce à l'usage de `basename()`.
+
+---
+
+## 5. Extension du Modèle d'Organisation (Membres, Groupes, Associations)
+
+Pour intégrer de nouvelles dimensions humaines au sein du système financier existant, le modèle d'organisation (documenté en détail dans `ORGANIZATION.md`) introduit les concepts suivants :
+*   **Membres (`Membre`)** : L'unité de base humaine rattachée à l'église.
+*   **Groupes (`Groupe`)** : Permet de classer les membres dans des structures exclusives (ex: Chorale, Diaconat). Un membre appartient à au plus un groupe (relation `ManyToOne` directe).
+*   **Associations (`Association`) & Sous-groupes (`SousGroupe`)** : Structures non-exclusives dans lesquelles un membre peut cumuler plusieurs adhésions. Les sous-groupes permettent de descendre d'un niveau hiérarchique au sein de chaque association.
+*   **Attributions de Rôles (`RoleAssignment`)** : Système de rôles contextuels polymorphiques permettant de nommer un membre à un poste spécifique (Président, Trésorier, Secrétaire, etc.) rattaché dynamiquement soit à l'église entière, soit à une association, un groupe ou un sous-groupe.
+
+Ce couplage permet d'associer directement l'activité humaine de l'église (ses membres et ses organisations internes) aux opérations comptables (offrandes, budgets, dépenses autorisées par association), ouvrant la voie à des fonctionnalités majeures telles que la gestion des budgets d'association, les campagnes de communication ciblées, et l'annuaire dynamique (détaillés dans `FEATURES.md`).

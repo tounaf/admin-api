@@ -150,3 +150,7 @@ Pour vous familiariser avec le projet, voici deux tâches "Easy-Win" prêtes à 
 ### Tâche 2 : Implémentation de la classe manquante `SabbatValidationStatisticsProvider`
 *   **Fichiers concernés** : `config/services.yaml` et dossier `src/State/`
 *   **Description** : La déclaration de service pour `App\State\SabbatValidationStatisticsProvider` existe déjà dans `services.yaml`, mais la classe physique PHP n'a pas encore été créée dans `src/State/`. Créez cette classe pour fournir des statistiques agrégées sur les validations de Sabbat validées vs rejetées.
+
+### Tâche 3 : Développement du module d'organisation des Membres et Rôles Contextuels
+*   **Documents de référence** : `ORGANIZATION.md` et `FEATURES.md`
+*   **Description** : Prenez connaissance du nouveau modèle d'organisation proposé (entités `Membre`, `Groupe`, `Association`, `SousGroupe`, `RoleAssignment`). Créez la première entité `Membre` avec ses relations, exposez-la via API Platform avec les filtres requis, puis implémentez les validations de cardinalité associées (par exemple, un membre ne peut avoir qu'un seul groupe).
