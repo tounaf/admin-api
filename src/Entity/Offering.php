@@ -24,6 +24,7 @@ class Offering
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['offering:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
@@ -46,7 +47,7 @@ class Offering
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['offering:read'])]
+    #[Groups(['offering:read', 'offering:write'])]
     private ?\DateTime $date = null;
 
     public function __construct()

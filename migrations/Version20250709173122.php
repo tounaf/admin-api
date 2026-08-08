@@ -14,18 +14,16 @@ final class Version20250709173122 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'No-op: duplicate of Version20250709112238 (created_at/date on offering).';
     }
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE offering ADD created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', ADD date DATE NOT NULL');
+        // Duplicate of Version20250709112238 — columns already exist.
     }
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE offering DROP created_at, DROP date');
+        // No-op (see up).
     }
 }
